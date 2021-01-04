@@ -62,3 +62,29 @@ def test_fn_FindSystemMatch_returns_zero_systems_when_no_matches():
     matches = helper.FindSystemMatch(search_system, cache_systems)
     
     assert len(matches) == 0
+    
+def test_FindSystemMatch_returns_system_when_zero_and_o_transposed():
+    # Arrange
+    system_name = "0-5TN1" #note the 0(zero) instead of a O
+    
+    with open('claims/cache_systems.json') as f:
+        cache_systems = json.load(f)
+        
+    # Act
+    matches = helper.FindSystemMatch(system_name, cache_systems)
+    
+    # Assert
+    assert "O-5TN1" in matches
+    
+def test_FindSystemMatch_returns_system_when_eight_and_B_transposed9():
+    # Arrange
+    system_name = "B-SPNN" #note the B instead of an 8(eight)
+    
+    with open('claims/cache_systems.json') as f:
+        cache_systems = json.load(f)
+        
+    # Act
+    matches = helper.FindSystemMatch(system_name, cache_systems)
+    
+    # Assert
+    assert "8-SPNN" in matches
