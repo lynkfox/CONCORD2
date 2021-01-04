@@ -1,6 +1,6 @@
 import pytest
 import json
-from claims import claim_helper as helper
+from claims import system_match_helper as helper
 
 
 def test_fn_CleanSystemName_removes_tack():
@@ -50,3 +50,15 @@ def test_fn_FindSystemMatch_returns_multiple_systems_With_similar_letter_names_i
     
     assert "RV5-TT" in matches
     assert "W2T-TR" in matches
+    
+def test_fn_FindSystemMatch_returns_zero_systems_when_no_matches():
+    # Arrange
+    search_system = "aa"
+    
+    with open('claims/cache_systems.json') as f:
+        cache_systems = json.load(f)
+        
+    # Act
+    matches = helper.FindSystemMatch(search_system, cache_systems)
+    
+    assert len(matches) == 0
