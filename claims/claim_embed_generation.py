@@ -2,24 +2,27 @@ import json
 import discord
 import os
 
-
 def generateSystems(region_names = ['Cache']):
-    
-    claims = []
+    region_lists = {}
     
     for region in region_names:
-        file_name = f'{region.lower()}.json'
+        claims = []
+        file_name = f'{region.lower().replace(" ", "_")}.json'
         
         file_path = os.path.join('claims', 'region_jsons', file_name)
         
         with open(file_path) as f:
-            region = json.load(f)
+            region_systems = json.load(f)
         
-        for constellation in region:
+        for constellation in region_systems:
             claims.append(f"__*{constellation}*__")
-            for system in region[constellation]:
+            for system in region_systems[constellation]:
                 claims.append(f"'{system}' :yes:")
-            
-        return claims
+        
+        region_name = region.lower().title()
+          
+        region_lists[region_name] = claims
+    
+    return region_lists
     
     
