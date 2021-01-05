@@ -5,6 +5,7 @@ from discord.ext import commands, tasks
 from discord.utils import get
 from datetime import datetime
 from utility.utilities import getInvocationInformation, getServerSpecificChannelInfo
+from claims import claim_embed_generation as generateEmbed
 
 class Claims(commands.Cog):
     def __init__(self, bot, logger):
@@ -87,7 +88,18 @@ class Claims(commands.Cog):
         guild = self.bot.get_guild(int('759960149313585202'))
         server_channels = getServerSpecificChannelInfo(guild)
         
-        await self.bot.get_channel(server_channels.claim_channel).send(f"Iterating: {iterator}")
+        system_list = generateEmbed.generateSystems(["Cache"])
+        embed_description = generateEmbed.generateEmbedDescription(system_list['Cache'])
         
-        iterator += 1 
-        # Send Claim Embed List to channel
+        current_time = current_time = datetime.utcnow()
+        
+        claim_embed = discord.Embed(Title="Cache System Claims", color=0x40E0D0,
+                                    description=embed_description,
+                                    timestamp=current_time)
+        
+        
+        messages = await self.bot.get_channel(server_channels.claim_channel).history(limit=100).flatten()
+        
+        await self.bot.get_channel(server_channels.claim_channel).delete_messages(messages)
+            
+        await self.bot.get_channel(server_channels.claim_channel).send(embed=claim_embed)

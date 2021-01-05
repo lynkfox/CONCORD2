@@ -15,9 +15,9 @@ def generateSystems(region_names = ['Cache']):
             region_systems = json.load(f)
         
         for constellation in region_systems:
-            claims.append(f"__*{constellation}*__")
+            claims.append(f"__**{constellation}**__\n")
             for system in region_systems[constellation]:
-                claims.append(f"'{system}' :yes:")
+                claims.append(f" `{system}`: \U00002705 \n")
         
         region_name = region.lower().title()
           
@@ -25,4 +25,16 @@ def generateSystems(region_names = ['Cache']):
     
     return region_lists
     
+    
+def generateEmbedDescription(systems):
+        
+    description = ""
+    
+    for entry in systems:
+        description += entry
+        
+    return description
+        
+    
+
     
