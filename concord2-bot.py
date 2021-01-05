@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
 from claims.claims_cog import Claims
+from utility.utilities import getInvocationInformation
 
 # Env Variables for security
 load_dotenv()
@@ -35,4 +36,12 @@ async def on_ready():
         logger.info(f'   {server.name}')
         
         
+@bot.command(name='license')
+async def liscence(ctx):
+    invoke = getInvocationInformation(ctx)
+    
+    await invoke.author.send("CONCORD2-Bot is provided under the GNU Affero General Public License v3.0.\n"
+                             "You can find the latest code available at: https://github.com/lynkfox/CONCORD2")
+
+
 bot.run(TOKEN)
