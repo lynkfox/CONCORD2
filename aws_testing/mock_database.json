@@ -1,0 +1,99 @@
+{
+    "testTable":[
+        {
+            "PutRequest":{
+                "Item":{
+                    "PK":{
+                        "S": "ALLIANCE#Test Alliance"
+                    },
+                    "SK":{
+                        "S": "MASTERSERVER#100000000"
+                    },
+                    "Guid_ID":{
+                        "S": "100000000"
+                    },
+                    "Guild_Name":{
+                        "S": "Test Server"
+                    },
+                    "Alliance_Name":{
+                        "S": "Test Alliance"
+                    },
+                    "PrimaryFlag":{
+                        "S": "1"
+                    },
+                    "Claim_Channel_ID":{
+                        "S": "100000033"
+                    },
+                    "Claim_Channel_Mod_Role_Id":{
+                        "S": "1000001341"
+                    },
+                    "Bot_Console_Out_Channel_ID":{
+                        "S": "10000135234"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest":{
+                "Item":{
+                    "PK":{
+                        "S": "ALLIANCE#Test Alliance"
+                    },
+                    "SK":{
+                        "S": "SERVER#10000003344"
+                    },
+                    "Guild_ID":{
+                        "S": "10000003344"
+                    },
+                    "Claim_Channel_ID":{
+                        "S": "100000033"
+                    },
+                    "Guid_Name":{
+                        "S": "Slave Server 1"
+                    },
+                    "Bot_Console_Out_Channel_ID":{
+                        "S": "1000013434632"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest":{
+                "Item":{
+                    "PK":{
+                        "S": "SYSTEM#B-T6BT"
+                    },
+                    "SK":{
+                        "S": "CLAIMENDS#2021-02-28T15:30:45"
+                    },
+                    "Claimant_ID":{
+                        "S": "13423513123"
+                    },
+                    "Claimant_Tag":{
+                        "S": "[RED1]Lynk Foxhunter"
+                    },
+                    "System_Name":{
+                        "S": "B-T6BT"
+                    },
+                    "Base_Level":{
+                        "S": "7"
+                    },
+                    "Reclaim_Number":{
+                        "S": "0"
+                    },
+                    "Deputy_Name":{
+                        "S": "[Red1]Seraph"
+                    },
+                    "Deputy_ID":{
+                        "S": "9993929832"
+                    },
+                    "Loot_Structure":{
+                        "S": "Co-op Store"
+                    }
+                    
+                    
+                }
+            }
+        }
+    ]
+}

@@ -20,6 +20,25 @@ class Claims(commands.Cog):
         
     def cog_unload(self):
         self.RefreshClaimList.cancel()
+        
+    @commands.command()
+    async def claimadmin(self,ctx,*, switcher=None, member:discord.Member = None):
+        # claim admin command for adminstrative purposes
+        
+        # Commands only allowed to work if on Alliance Master Server
+        
+        if switcher.upper() == "FORCE": # and author == Approved Claim Mod
+            print('Force')
+            # Check to see if system is Active
+            # End claim, require Reason
+            # Update DB
+            # Update Claim List
+            # Delete Invocations
+        elif switcher.upper() == "HISTORY": # and author == approved Claim Mod
+            print('History')
+            # Make sure it has a Member attached
+            # check the table for all claims for Member
+            # output embed to channel
                 
     @commands.command()
     async def claim(self, ctx, *, switcher="HELP", system=None, baseLevel:int = 0):
@@ -52,14 +71,6 @@ class Claims(commands.Cog):
             # Update DB for Claim Released
             # Update Claim List
             # Delete Invocations
-        elif switcher.upper() == "FORCE": # and author == Approved Claim Mod
-            print('Force')
-            # Check to see if system is Active
-            # End claim, require Reason
-            # Update DB
-            # Update Claim List
-            # Delete Invocations
-            
         else:
             print('Help/Default')
             # send HELP dm
@@ -68,3 +79,4 @@ class Claims(commands.Cog):
     @tasks.loop(seconds=5.0)
     async def RefreshClaimList(self):
         print('bar')
+        # Send Claim Embed List to channel
