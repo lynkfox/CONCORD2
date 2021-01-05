@@ -4,6 +4,7 @@ import json, os, logging
 from discord.ext import commands, tasks
 from discord.utils import get
 from datetime import datetime
+from utility.utilities import getInvocationInformation, getServerSpecificChannelInfo
 
 class Claims(commands.Cog):
     def __init__(self, bot, logger):
@@ -16,7 +17,7 @@ class Claims(commands.Cog):
         logger.info(f'({current_time}) CLAIMS: Claim Cog Inititialized.')
         
     def setup(bot, logger):
-        bot.add_cog(Claims(bot, logger))
+        self.bot.add_cog(Claims(bot, logger))
         
     def cog_unload(self):
         self.RefreshClaimList.cancel()
@@ -76,7 +77,17 @@ class Claims(commands.Cog):
             # send HELP dm
             # delete invocations
     
-    @tasks.loop(seconds=5.0)
+    @tasks.loop(seconds=10.0)
     async def RefreshClaimList(self):
-        print('bar')
+        
+        # TODO: DynamoDB Search for all unique ServerIDs and their associated master servers
+        
+        # For each Server in the same Alliance, send a message to their associated claim channels
+        
+        guild = self.bot.get_guild(int('759960149313585202'))
+        server_channels = getServerSpecificChannelInfo(guild)
+        
+        await self.bot.get_channel(server_channels.claim_channel).send(f"Iterating: {iterator}")
+        
+        iterator += 1 
         # Send Claim Embed List to channel

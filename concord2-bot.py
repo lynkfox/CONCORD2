@@ -25,16 +25,14 @@ logger.addHandler(handler)
 
 @bot.event
 async def on_ready():
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
  
-    logger.info(f'({current_time}) ON_READY: {bot.user} has logged in.')
+    logger.info(f'ON_READY: {bot.user} has logged in.')
     bot.add_cog(Claims(bot, logger))
     
     servers = list(bot.guilds)
-    print("Connected on " + str(len(servers)) + " servers:")
+    logger.info(f'Connected on {str(len(servers))} servers:')
     for server in servers:
-        print('   ' + server.name)
+        logger.info(f'   {server.name}')
         
         
 bot.run(TOKEN)

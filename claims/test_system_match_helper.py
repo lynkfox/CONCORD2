@@ -27,7 +27,7 @@ def test_fn_FindSystemMatch_returns_only_one_system_with_full_name():
     # Arrange
     system_name = "2-2EWC"
     
-    with open('claims/cache_systems.json') as f:
+    with open('claims/region_jsons/cache.json') as f:
         cache_systems = json.load(f)
         
     # Act
@@ -42,7 +42,7 @@ def test_fn_FindSystemMatch_returns_multiple_systems_With_similar_letter_names_i
     # Arrange
     search_system = "TT"
     
-    with open('claims/cache_systems.json') as f:
+    with open('claims/region_jsons/cache.json') as f:
         cache_systems = json.load(f)
         
     # Act
@@ -55,7 +55,7 @@ def test_fn_FindSystemMatch_returns_zero_systems_when_no_matches():
     # Arrange
     search_system = "aa"
     
-    with open('claims/cache_systems.json') as f:
+    with open('claims/region_jsons/cache.json') as f:
         cache_systems = json.load(f)
         
     # Act
@@ -67,7 +67,7 @@ def test_FindSystemMatch_returns_system_when_zero_and_o_transposed():
     # Arrange
     system_name = "0-5TN1" #note the 0(zero) instead of a O
     
-    with open('claims/cache_systems.json') as f:
+    with open('claims/region_jsons/cache.json') as f:
         cache_systems = json.load(f)
         
     # Act
@@ -80,7 +80,7 @@ def test_FindSystemMatch_returns_system_when_eight_and_B_transposed9():
     # Arrange
     system_name = "B-SPNN" #note the B instead of an 8(eight)
     
-    with open('claims/cache_systems.json') as f:
+    with open('claims/region_jsons/cache.json') as f:
         cache_systems = json.load(f)
         
     # Act
