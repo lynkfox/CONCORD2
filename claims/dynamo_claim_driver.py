@@ -1,12 +1,14 @@
 import boto3
 from datetime import datetime, timedelta
 
-# TODO: Change hours=2 to hours = global variable
+# Pulling variables out for future change to allow them to be modable
+RECLAIMS = 1
+CLAIM_HOURS = 2
 
 def add_Claimant(member, system, base, table):
     
     now =datetime.utcnow().replace(microsecond=0)
-    expires = now + timedelta(hours=2)
+    expires = now + timedelta(hours=CLAIM_HOURS)
     expiresISO = expires.isoformat()
     nowISO = now.isoformat()
     
