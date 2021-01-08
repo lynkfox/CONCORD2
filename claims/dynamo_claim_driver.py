@@ -5,11 +5,13 @@ from datetime import datetime, timedelta
 
 def add_Claimant(member, system, base, table):
     
-    expires = datetime.utcnow().replace(microsecond=0) + timedelta(hours=2)
-    expires = expires.isoformat()
+    now =datetime.utcnow().replace(microsecond=0)
+    expires = now + timedelta(hours=2)
+    expiresISO = expires.isoformat()
+    nowISO = now.isoformat()
     
     PK = "SYSTEM#"+system
-    SK = "CLAIMENDS#"+expires
+    SK = "CLAIMENDS#"+expiresISO
     
     
     
@@ -21,7 +23,9 @@ def add_Claimant(member, system, base, table):
             'Claimant_Tag': member.display_name,
             'System_Name': system,
             'Base_Level': str(base),
-            'Reclaim_Number':str(0)
+            'Reclaim_Number':str(0),
+            'Created_At': nowISO,
+            'Updated_at': nowISO
         }
     )
     
