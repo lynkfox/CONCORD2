@@ -71,4 +71,28 @@ def test_fn_addClaimant_successfully_is_two_hours_from_insert_time():
     # Assert
     assert inserted_item["Items"][0]['SK'] == 'CLAIMENDS#'+expiresISO
     
+@mock_dynamodb2
+def test_fn_addClaimant_successfully_adds_with_deputy():
+    # Arrange
+    mock_dynamo_setup.setup()
+    ddb = boto3.resource('dynamodb')
+    table = ddb.Table('testTable')
     
+    mock_member = collections.namedtuple('Member', 'display_name id')
+    mock_member.display_name = "[TST]Name"
+    mock_member.id = "9999999999"
+    
+    mock_deputy = collections.namedtuple('Deputy', 'display_name id')
+    mock_deputy.display_name = "[TST]Deputy"
+    mock_deputy.id = "1111111111"
+    
+    
+    # Act
+    response = claim_driver.add_Claimant(mock_member, "BT-6BT", 7, table, deputy=mock_deputy)
+    inserted_item = table.query(
+        KeyConditionExpression=Key('PK').eq("SYSTEM#BT-6BT")
+    )
+    
+    # Assert
+    assert len(inserted_item["Items"]) == 1
+    assert inserted_item["Items"][0]["Deputy_Tag"] == mock_deputy.display_name
