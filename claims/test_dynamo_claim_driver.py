@@ -136,3 +136,23 @@ def test_fn_checkActiveClaims_returns_none_if_no_active_claim():
     # Assert
     assert actual_response is None
     
+@mock_dynamodb2
+def test_fn_getAllActiveClaims_returns_all_claims_within_the_active_time():
+    # Arrange
+    mock_dynamo_setup.setup()
+    ddb = boto3.resource('dynamodb')
+    table = ddb.Table('testTable')
+    
+    mock_member = collections.namedtuple('Member', 'display_name id')
+    mock_member.display_name = "[TST]Name"
+    mock_member.id = "9999999999"
+    
+    # Act
+    response = claim_driver.add_Claimant(mock_member, "BT-6BT", 7, table)
+    response = claim_driver.add_Claimant(mock_member, "8-SPNN", 7, table)
+    response = claim_driver.add_Claimant(mock_member, "M53-TU", 7, table)
+    
+    actual_response = claim_driver.get_All_Active_Claims(table)
+    
+    # Assert
+    assert len(actual_response["Items"]) == 3

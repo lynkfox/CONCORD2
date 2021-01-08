@@ -1,5 +1,5 @@
 import boto3, collections, botocore
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Key, Attr
 from datetime import datetime, timedelta
 
 # Pulling variables out for future change to allow them to be modable
@@ -86,8 +86,15 @@ def check_Active_Claims(system, table):
             
         return claim_info
     
+def get_All_Active_Claims(table):
+    timers = create_timers()
+    
+    response = table.scan(
+        FilterExpression=Attr('Expires_at').gt(timers.nowISO)
+    )
+    
+    return response
 
-# TODO: Check for current claims active on a system
 # TODO: Update current claim to Release it or Reclaim it
 # TODO: End Claims that have expired
 # TODO: If system is Unclaimed and reclaimed by the same person before original time out, reinstate timeout
