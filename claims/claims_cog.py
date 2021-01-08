@@ -88,7 +88,11 @@ class Claims(commands.Cog):
         guild = self.bot.get_guild(int('759960149313585202'))
         server_channels = getServerSpecificChannelInfo(guild)
         
+        # TODO: Add a global dictionary of all Regions to be included here (to replace ["Cache"])
+        
         system_list = generateEmbed.generateSystems(["Cache"])
+        
+        # TODO: Loop through each of the systems_lists for each different region and create an embed for each
         embed_description = generateEmbed.generateEmbedDescription(system_list['Cache'])
         
         current_time = current_time = datetime.utcnow()

@@ -14,12 +14,14 @@ def setup():
             {'AttributeName': 'SK', "AttributeType": "STRING"}
         ],
         KeySchema=[
-            {'AttributeName': 'PK', "AttributeType": "HASH"},
-            {'AttributeName': 'SK', "AttributeType": "RANGE"}
+            {'AttributeName': 'PK', "KeyType": "HASH"},
+            {'AttributeName': 'SK', "KeyType": "RANGE"}
         ],
     )
     
     with open("aws_testing/mock_database.json") as f:
-        items = json.laods(f.read())
+        
+        client = boto3.client("dynamodb")
+        items = json.loads(f.read())
         response = client.batch_write_item(RequestItems=items)
         print(response)

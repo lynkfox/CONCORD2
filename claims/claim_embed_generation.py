@@ -1,6 +1,8 @@
 import json
 import discord
 import os
+from datetime import datetime
+import time
 
 def generateSystems(region_names = ['Cache']):
     region_lists = {}
@@ -31,6 +33,7 @@ def generateEmbedDescription(systems):
     description = ""
     
     for entry in systems:
+        # TODO: Check DynamoDB to see if anyone has claimed this system
         description += entry
         
     return description

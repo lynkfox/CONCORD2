@@ -63,7 +63,7 @@ def test_fn_FindSystemMatch_returns_zero_systems_when_no_matches():
     
     assert len(matches) == 0
     
-def test_FindSystemMatch_returns_system_when_zero_and_o_transposed():
+def test_fn_FindSystemMatch_returns_system_when_zero_and_o_transposed():
     # Arrange
     system_name = "0-5TN1" #note the 0(zero) instead of a O
     
@@ -76,7 +76,7 @@ def test_FindSystemMatch_returns_system_when_zero_and_o_transposed():
     # Assert
     assert "O-5TN1" in matches
     
-def test_FindSystemMatch_returns_system_when_eight_and_B_transposed9():
+def test_fn_FindSystemMatch_returns_system_when_eight_and_B_transposed9():
     # Arrange
     system_name = "B-SPNN" #note the B instead of an 8(eight)
     

@@ -26,7 +26,7 @@ class TestDynamoDBMockSetup():
         ddb.Table("testTable").delete()
         
     def test_mock_data_successfully_setup(self):
-        ddb= boto3.resource("dynamo3b")
+        ddb= boto3.resource("dynamodb")
         table = ddb.Table("testTable")
         all_items = table.scan()
         return len(all_items["Items"]) == 3
