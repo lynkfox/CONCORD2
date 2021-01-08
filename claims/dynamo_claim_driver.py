@@ -17,7 +17,7 @@ def create_timers():
     
     return timer_tuple
 
-def add_Claimant(member, system, base, table, *, deputy=None, loot="None Selected"):
+def add_Claimant(member, system, base, table, *, deputy=None, comments="None"):
     
     timers = create_timers()
     
@@ -40,13 +40,14 @@ def add_Claimant(member, system, base, table, *, deputy=None, loot="None Selecte
             'Claimant_Tag': member.display_name,
             'System_Name': system,
             'Base_Level': str(base),
-            'Reclaim_Number':str(0),
+            'Reclaim_Number':0,
             'Created_At': timers.nowISO,
             'Updated_at': timers.nowISO,
             'Expires_at': timers.expiresISO,
             'Deputy_ID': deputy_store.id,
             'Deputy_Tag':deputy_store.display_name,
-            'Loot_Distribution':loot
+            'Comments':comments,
+            'Active': 'Yes'
         }
     )
     
@@ -58,8 +59,6 @@ def check_Active_Claims(system, table):
     
     # System to be searching for
     PK = "SYSTEM#"+system 
-    # Any Claims that are made AFTER the claim Limit timer (default 2 hours)
-    SK = "CLAIMENDS#"+timers.pastISO
     
     # Since only one person can ever claim a system, only return the latest claim
     result = table.query(
@@ -72,7 +71,7 @@ def check_Active_Claims(system, table):
     if result_expires < timers.past:
         return None
     else:
-        claim_info = collections.namedtuple("Claimant", "display_name id system expires deputy_name deputy_id, loot")
+        claim_info = collections.namedtuple("Claimant", "display_name id system expires deputy_name deputy_id, comments")
         claim_info.display_name = result["Items"][0]["Claimant_Tag"]
         claim_info.id = result["Items"][0]["Claimant_ID"]
         claim_info.expires = result["Items"][0]["Expires_at"]
@@ -82,7 +81,7 @@ def check_Active_Claims(system, table):
             claim_info.deputy_id =result["Items"][0]["Deputy_ID"]
         else:
             claim_info.deputy_id = "None"
-        claim_info.loot =result["Items"][0]["Loot_Distribution"]
+        claim_info.comments =result["Items"][0]["Comments"]
             
         return claim_info
     
@@ -95,7 +94,23 @@ def get_All_Active_Claims(table):
     
     return response
 
+def release_Claim(system, member, table):
+    timers = create_timers()
+    
+    # System to be searching for
+    PK = "SYSTEM#"+system 
+    
+    # Since only one person can ever claim a system, only return the latest claim
+    result = table.query(
+        KeyConditionExpression=Key('PK').eq(PK),
+        Limit=1
+    )
+    
+    
+
 # TODO: Update current claim to Release it or Reclaim it
 # TODO: End Claims that have expired
 # TODO: If system is Unclaimed and reclaimed by the same person before original time out, reinstate timeout
-# TODO: 
+# TODO: Claim Returns Error if different member tries to claim it
+# TODO: Claim returns error if same member tires to claim it
+# TODO: Deputy Acceptance for Reclaim and Release

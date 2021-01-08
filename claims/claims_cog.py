@@ -41,23 +41,43 @@ class Claims(commands.Cog):
             # Make sure it has a Member attached
             # check the table for all claims for Member
             # output embed to channel
+        elif switcher.upper() == "BASE": # and author == approved Claim Mod
+            print('Base')
+            # Takes a Region (Cache, Gem-East, Gem-West)
+            # Returns the latest reported Base Level and the date it was reported
                 
     @commands.command()
-    async def claim(self, ctx, *, switcher="HELP", system=None, baseLevel:int = 0):
+    async def claim(self, ctx, *, args):
         # Claim command !claim (followed by the switcher, defaulting to Help if someone does not use one)
         
-        if switcher.upper() == "CLAIM":
-            print('Claim')
-            # Check if prexisting Claim in DB still hasn't expired for the Same System
-            # Make sure that BaseLevel is included - else request (listener)
-            # Find matching systems, and request (listener)
-            # Initiate a Claim for author
-            # Claim system for Time+2 hrs
-            # Mark 0 Reclaims
-            # Record Claim in DB
-            # Update Claim List
-            # Delete Invocations
-        elif switcher.upper() == "RECLAIM":
+        
+        #split args by " "
+        # [0] = Switcher or System
+        # if a number then System Level
+        # if a member then Deputy
+        # otherwise Loot
+        # if following * then comment
+        
+        arg_list = args.split(" ")
+        
+        switcher = arg_list[0]
+        
+        base_level = 0
+        deputy = None
+        comments = "No Comment" # loot or other comments can go here.
+        
+        for additional_arg in arg_list[1:]:
+            if additional_arg.isnumeric():
+                base_level = additional_arg
+            elif isinstance(additional_arg, discord.Member):
+                deputy = additional_arg
+            else additional_arg[0] is '*':
+                comments = str(arg_list[arg_list.index(additional_arg):])
+                break
+            
+                
+        
+        if switcher.upper() == "RECLAIM":
             print('Reclaim')
             # Check to see if active claim
             # check to see if within limit of X free reclaims
@@ -73,10 +93,25 @@ class Claims(commands.Cog):
             # Update DB for Claim Released
             # Update Claim List
             # Delete Invocations
-        else:
+        elif switcher.upper() == "INFO"
+            print('Info')
+            # Find active system
+            # return information in DM about Expires, Deputy, Loot Structure, Comments
+        elif switcher.upper() == "HELP":
             print('Help/Default')
             # send HELP dm
             # delete invocations
+        else #system Name
+            print('Claim')
+            # Check if prexisting Claim in DB still hasn't expired for the Same System
+            # Make sure that BaseLevel is included - else request (listener)
+            # Find matching systems, and request (listener)
+            # Initiate a Claim for author
+            # Claim system for Time+2 hrs
+            # Mark 0 Reclaims
+            # Record Claim in DB
+            # Update Claim List
+            # Delete Invocations
     
     @tasks.loop(seconds=10.0)
     async def RefreshClaimList(self):
