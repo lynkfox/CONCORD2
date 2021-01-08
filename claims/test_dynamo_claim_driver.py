@@ -96,3 +96,43 @@ def test_fn_addClaimant_successfully_adds_with_deputy():
     # Assert
     assert len(inserted_item["Items"]) == 1
     assert inserted_item["Items"][0]["Deputy_Tag"] == mock_deputy.display_name
+    
+@mock_dynamodb2
+def test_fn_checkActiveClaims_returns_claimaint_name_and_expiration_if_one_within_last_two_hours():
+    # Arrange
+    mock_dynamo_setup.setup()
+    ddb = boto3.resource('dynamodb')
+    table = ddb.Table('testTable')
+    
+    mock_member = collections.namedtuple('Member', 'display_name id')
+    mock_member.display_name = "[TST]Name"
+    mock_member.id = "9999999999"
+    
+    now =datetime.utcnow().replace(microsecond=0)
+    expires = now + timedelta(hours=2)
+    expiresISO = expires.isoformat()
+    
+    # Act
+    response = claim_driver.add_Claimant(mock_member, "BT-6BT", 7, table)
+    actual_name_response = claim_driver.check_Active_Claims("BT-6BT", table)
+    
+    assert actual_name_response.display_name == "[TST]Name"
+    assert actual_name_response.expires == expiresISO
+    
+@mock_dynamodb2
+def test_fn_checkActiveClaims_returns_none_if_no_active_claim():
+    # Arrange
+    mock_dynamo_setup.setup()
+    ddb = boto3.resource('dynamodb')
+    table = ddb.Table('testTable')
+    
+    mock_member = collections.namedtuple('Member', 'display_name id')
+    mock_member.display_name = "[TST]Name"
+    mock_member.id = "9999999999"
+    
+    # Act
+    actual_response = claim_driver.check_Active_Claims("B-T6BT", table)
+    
+    # Assert
+    assert actual_response is None
+    

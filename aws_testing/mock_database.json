@@ -87,8 +87,11 @@
                     "Deputy_ID":{
                         "S": "9993929832"
                     },
-                    "Loot_Structure":{
+                    "Loot_Distribution":{
                         "S": "Co-op Store"
+                    },
+                    "Expires_at":{
+                        "S": "2021-01-01T15:30:45"
                     }
                     
                     
